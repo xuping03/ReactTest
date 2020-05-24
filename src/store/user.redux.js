@@ -1,6 +1,7 @@
 const initial={
     isLogin:false,
     loading:false,
+    error:""
 
 }
 export const user=(state=initial,action)=>{
@@ -8,12 +9,20 @@ export const user=(state=initial,action)=>{
         case "requestLogin":
             return {
                 isLogin:false,
-                loading:true
+                loading:true,
+                error:""
             };
-        case "login":
+        case "loginSuccess":
             return {
                 isLogin:true,
-                loading:false
+                loading:false,
+                error:""
+            };
+        case "loginFailure":
+            return {
+                isLogin:false,
+                loading:false,
+                error:action.message
             };
         default:
             return state;
@@ -21,10 +30,13 @@ export const user=(state=initial,action)=>{
 };
 
 //action creator
-export const login=()=>dispatch=>{
-    dispatch({type:"requestLogin"});
-    //异步操作
-    setTimeout(()=>{
-        dispatch({type:"login"});
-    },2000);
+export function login(uname){
+    return {type:"login",uname}
 }
+// export const login=()=>dispatch=>{
+//     dispatch({type:"requestLogin"});
+//     //异步操作
+//     setTimeout(()=>{
+//         dispatch({type:"login"});
+//     },2000);
+// }
